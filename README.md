@@ -78,6 +78,13 @@ docker-compose up -d --build
     docker exec -it chameleon_pro_lab /bin/bash
     ```
 
+### Ejecución Local del Dashboard (Sin Docker)
+Si prefieres correrlo directamente en tu máquina (requiere Python 3.8+):
+```bash
+pip install -r requirements.txt
+streamlit run src/web_dashboard.py
+```
+
 ### Notas sobre Hardware en Docker
 Estad atentos a mapear correctamente el dispositivo USB (`/dev/ttyACM0`) en el archivo `docker-compose.yml`. Si no tenéis el dispositivo, podéis usar el **Modo Simulador** en el Dashboard.
 
