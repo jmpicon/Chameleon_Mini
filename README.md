@@ -78,12 +78,25 @@ docker-compose up -d --build
     docker exec -it chameleon_pro_lab /bin/bash
     ```
 
-### Ejecución Local del Dashboard (Sin Docker)
-Si prefieres correrlo directamente en tu máquina (requiere Python 3.8+):
-```bash
-pip install -r requirements.txt
-streamlit run src/web_dashboard.py
-```
+### Ejecución Local con Entorno Virtual (Recomendado para Desarrollo)
+Para no mezclar librerías con tu sistema operativo, hemos preparado un script que aisla todo el proyecto en una carpeta `venv`.
+
+1.  **Configurar el entorno (solo la primera vez):**
+    ```bash
+    ./setup_venv.sh
+    ```
+    Esto creará la carpeta `venv/` e instalará todo lo necesario automáticamente.
+
+2.  **Activar el entorno:**
+    ```bash
+    source venv/bin/activate
+    ```
+    Verás que tu terminal cambia indicando `(venv)`.
+
+3.  **Lanzar el Dashboard:**
+    ```bash
+    streamlit run src/web_dashboard.py
+    ```
 
 ### Notas sobre Hardware en Docker
 Estad atentos a mapear correctamente el dispositivo USB (`/dev/ttyACM0`) en el archivo `docker-compose.yml`. Si no tenéis el dispositivo, podéis usar el **Modo Simulador** en el Dashboard.
