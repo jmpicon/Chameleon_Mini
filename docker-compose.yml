@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  chameleon-lab:
+    build: .
+    container_name: chameleon_pro_lab
+    volumes:
+      - .:/app
+    # Mapeo de dispositivos hardware: necesario para acceder a los puertos serie
+    # Nota: En Linux, esto mapea todos los dispositivos serie.
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
+      - "/dev/chameleon:/dev/chameleon"
+    # Permisos para acceder al hardware
+    privileged: true
+    group_add:
+      - dialout
+    stdin_open: true
+    tty: true
+    working_dir: /app
+    environment:
+      - PYTHONPATH=/app

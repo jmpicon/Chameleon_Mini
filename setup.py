@@ -22,4 +22,9 @@ setup(
         "Topic :: Security",
     ],
     python_requires='>=3.8',
+    entry_points={
+        'console_scripts': [
+            'chameleon-cli=src.cli:main',
+        ],
+    },
 )

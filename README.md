@@ -54,12 +54,39 @@ Usa siempre los dispositivos `/dev/cu.usbmodem*`. He configurado la detección a
 ## 4. Estructura del Repositorio
 
 -   `src/`: El "motor" del proyecto. `ChameleonInterface` gestiona toda la comunicación.
+-   `src/cli.py`: Herramienta de línea de comandos para uso rápido.
 -   `examples/`: Scripts terminados y listos para usar en auditorías reales.
--   `student_material/`: Una versión simplificada y comentada para alumnos, diseñada para ser entregada como base de laboratorio.
+-   `student_material/`: Una versión simplificada y comentada para alumnos.
 
 ---
 
-## 5. El Camino del Estudiante: Del Bit al Acceso
+## 5. Uso con Docker (Entorno Aislado)
+
+Para facilitar el despliegue en entornos de clase o laboratorios de auditoría, he incluido soporte para **Docker**. Esto asegura que todas las dependencias estén presentes sin ensuciar el sistema host.
+
+### Construir y Ejecutar
+```bash
+docker-compose up -d --build
+docker exec -it chameleon_pro_lab /bin/bash
+```
+
+### Notas sobre Hardware en Docker
+El archivo `docker-compose.yml` está configurado para intentar mapear `/dev/ttyACM0` y `/dev/chameleon` automáticamente. Si usas otros puertos, ajusta la sección `devices`.
+
+---
+
+## 6. Futuras Mejoras (Roadmap)
+
+Como docente y auditor, mi visión para este proyecto incluye:
+
+1.  **Dashboard de Monitoreo**: Una interfaz web (Streamlit/Flask) para visualizar el sniffing en tiempo real con gráficos de ocupación de banda.
+2.  **Analizador de Protocolos Avanzado**: Traducción automática de tramas RAW a comandos legibles (ej: "Lector enviando SELECT", "Tarjeta respondiendo ATS").
+3.  **Simulador Integrado**: Un sistema de mocks para que los alumnos puedan programar y testear sus scripts sin necesidad de tener el hardware físico conectado.
+4.  **Soporte DESFire/Ultralight C**: Ampliación de la biblioteca para manejar protocolos con cifrado avanzado.
+
+---
+
+## 7. El Camino del Estudiante: Del Bit al Acceso
 
 Este proyecto está estructurado pedagógicamente. Si eres docente o estás usando este material para formación:
 1.  **Fundamentos**: Entender el protocolo de comandos ASCII.
