@@ -25,6 +25,11 @@ Si estás en **Linux**, recuerda aplicar la regla UDEV que vimos en clase para e
 
 ## 3. Tus Misiones
 
+### Laboratorio 00: Laboratorio Virtual (¡Nuevo!)
+**Objetivo:** Aprender a programar sin necesidad del hardware físico.
+- Usarás el simulador `ChameleonMock`.
+- Ideal para practicar en casa o en el bus antes de llegar al laboratorio real.
+
 ### Laboratorio 01: Contacto Inicial
 **Objetivo:** Verificar que tu ordenador "habla" con el Chameleon.
 -   Aprenderás a usar el comando `VERSION?` y `RSSI?`.
