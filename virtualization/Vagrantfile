@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y python3-pip python3-dev socat
+    cd /vagrant
+    pip3 install -r requirements.txt
+    pip3 install -e .
+    echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2044", MODE="0666", SYMLINK+="chameleon"' | tee /etc/udev/rules.d/99-chameleon.rules
+    udevadm control --reload-rules && udevadm trigger
+  SHELL
+
+  # Configuración para permitir acceso a USB (Requiere VirtualBox Guest Additions)
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 1
+    # vb.customize ["usbxhci", "on"]
+  end
+end

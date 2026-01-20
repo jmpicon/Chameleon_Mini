@@ -9,9 +9,16 @@ class ChameleonInterface:
     Implementa el protocolo ASCII y gestión de estados del firmware.
     """
     
-    def __init__(self, port, timeout=2):
+    def __init__(self, port=None, timeout=2, mock_device=None):
         self.logger = logging.getLogger("ChameleonAPI")
         self.port = port
+        self.mock_mode = mock_device is not None
+        
+        if self.mock_mode:
+            self.serial = mock_device
+            self.logger.info("Iniciando en modo SIMULACIÓN (Mock Hardware)")
+            return
+
         try:
             # Aunque sea CDC, definimos un baudrate estándar
             self.serial = serial.Serial(port, 115200, timeout=timeout)
@@ -31,6 +38,14 @@ class ChameleonInterface:
         """
         Envía un comando ASCII y parsea la respuesta estructurada.
         """
+        if self.mock_mode:
+            raw_response = self.serial.handle_command(comando)
+            # Simular comportamiento de líneas para el parser
+            lineas = raw_response.split('\n')
+            codigo = int(lineas[-1].split(':')[0]) if ':' in lineas[-1] else int(lineas[-1][:3])
+            mensaje = lineas[-1].split(':', 1)[1].strip() if ':' in lineas[-1] else ""
+            return self._parsear_respuesta(codigo, mensaje, lineas)
+
         if not self.serial.is_open:
             raise ConnectionError("La conexión serie se ha perdido.")
 
