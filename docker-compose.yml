@@ -22,3 +22,5 @@ services:
       - "8501:8501"
     environment:
       - PYTHONPATH=/app
+    # Arrancar automáticamente el Dashboard Web
+    command: streamlit run src/web_dashboard.py --server.port 8501 --server.address 0.0.0.0
