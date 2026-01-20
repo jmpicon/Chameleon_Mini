@@ -1,5 +1,11 @@
+# Core Dependencies
 pyserial>=3.5
 xmodem>=0.4.7
 colorama>=0.4.4
+
+# Dev & Testing Dependencies
 pytest>=7.0.0
 pytest-cov>=4.0.0
+flake8>=6.0.0
+black>=23.3.0
+pre-commit>=3.3.0
