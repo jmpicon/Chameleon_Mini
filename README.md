@@ -54,24 +54,32 @@ Usa siempre los dispositivos `/dev/cu.usbmodem*`. He configurado la detección a
 ## 4. Estructura del Repositorio
 
 -   `src/`: El "motor" del proyecto. `ChameleonInterface` gestiona toda la comunicación.
+-   `src/web_dashboard.py`: **¡NUEVO!** Panel de control web visual y moderno.
 -   `src/cli.py`: Herramienta de línea de comandos para uso rápido.
 -   `examples/`: Scripts terminados y listos para usar en auditorías reales.
 -   `student_material/`: Una versión simplificada y comentada para alumnos.
 
 ---
 
-## 5. Uso con Docker (Entorno Aislado)
+## 5. Uso con Docker y Panel Web
 
-Para facilitar el despliegue en entornos de clase o laboratorios de auditoría, he incluido soporte para **Docker**. Esto asegura que todas las dependencias estén presentes sin ensuciar el sistema host.
+Hemos preparado un entorno contenerizado que incluye tanto las herramientas de terminal como el **Dashboard Web**.
 
 ### Construir y Ejecutar
 ```bash
 docker-compose up -d --build
-docker exec -it chameleon_pro_lab /bin/bash
 ```
 
+### Acceso a las Herramientas
+1.  **Dashboard Web**: Abre tu navegador en `http://localhost:8501`.
+    *   Interfaz gráfica para controlar slots, cambiar UIDs y ver el tráfico en tiempo real traducido.
+2.  **Terminal**: Si prefieres la consola:
+    ```bash
+    docker exec -it chameleon_pro_lab /bin/bash
+    ```
+
 ### Notas sobre Hardware en Docker
-El archivo `docker-compose.yml` está configurado para intentar mapear `/dev/ttyACM0` y `/dev/chameleon` automáticamente. Si usas otros puertos, ajusta la sección `devices`.
+Estad atentos a mapear correctamente el dispositivo USB (`/dev/ttyACM0`) en el archivo `docker-compose.yml`. Si no tenéis el dispositivo, podéis usar el **Modo Simulador** en el Dashboard.
 
 ---
 
