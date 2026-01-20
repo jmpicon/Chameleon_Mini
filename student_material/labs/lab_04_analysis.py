@@ -32,6 +32,10 @@ def lab04():
             if dev.serial.in_waiting > 0:
                 linea = dev.serial.readline().decode('ascii', errors='ignore').strip()
                 if linea:
+                    # RETO PRO: Descomenta las siguientes líneas para usar el traductor automático
+                    # from library.translator import ISO14443ATranslator
+                    # print(ISO14443ATranslator.translate_line(linea))
+
                     # TODO: Identifica si la línea empieza por < (Lector) o > (Tarjeta)
                     if "<" in linea:
                         print(f"[LECTOR] -> {linea}")

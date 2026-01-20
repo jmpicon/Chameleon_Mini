@@ -13,6 +13,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.connection import seleccionar_puerto
 from src.interface import ChameleonInterface
+from src.translator import ISO14443ATranslator
 from colorama import Fore, Style, init
 
 init(autoreset=True)
@@ -32,7 +33,7 @@ def main():
         dev.enviar_comando("CLEAR")
         dev.enviar_comando("LOGMODE=LIVE")
 
-        print(f"{Fore.GREEN}[LIVE] Escuchando tráfico RF. Interacción detectada:")
+        print(f"{Fore.GREEN}[LIVE] Escuchando tráfico RF. Traducción en tiempo real:")
         print(f"{Fore.WHITE}(Presione Ctrl+C para finalizar y guardar log)")
         
         log_captured = []
@@ -42,11 +43,11 @@ def main():
                 if dev.serial.in_waiting > 0:
                     raw_line = dev.serial.readline().decode('ascii', errors='ignore').strip()
                     if raw_line and not raw_line.isdigit():
-                        # Diferenciar entre datos del lector y de la tarjeta
-                        # En Chameleon, < es entrada (lector) y > es salida (tarjeta emulada)
-                        prefix = f"{Fore.RED}[Lector] " if "<" in raw_line else f"{Fore.BLUE}[Tarjeta] "
-                        print(f"{prefix}{Fore.WHITE}{raw_line}")
-                        log_captured.append(raw_line)
+                        # Usar el traductor inteligente
+                        decoded = ISO14443ATranslator.translate_line(raw_line)
+                        if decoded:
+                            print(f"{Fore.WHITE}{decoded}")
+                            log_captured.append(raw_line)
                 time.sleep(0.01)
         except KeyboardInterrupt:
             print(f"\n{Fore.YELLOW}[!] Deteniendo captura...")
